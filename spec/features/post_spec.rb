@@ -56,10 +56,19 @@ describe 'navigate' do
     it 'has a link from the homepage' do
       visit root_path
       click_link("new_post_from_nav")
-      
+
       expect(page.status_code).to eq(200)
     end
   end
+
+  describe 'delete' do
+    it 'can be deleted' do
+      @post = create(:post, rationale: "DELETEME")
+      visit posts_path
+      click_link("delete_#{@post.id}")
+      expect(page).not_to have_content "DELETEME"
+    end
+  end  
 
   describe 'edit' do
     before do
